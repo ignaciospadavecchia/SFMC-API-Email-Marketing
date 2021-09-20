@@ -1,0 +1,19 @@
+{
+  "name": "sessions-api",
+  "version": "1.0.0",
+  "description": "An API that returns vouchers",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ignaciospadavecchia/intro-node-sessions-api.git"
+  },
+  "author": "Ignacio Spadavecchia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ignaciospadavecchia/intro-node-sessions-api/issues"
+  },
+  "homepage": "https://github.com/ignaciospadavecchia/intro-node-sessions-api#readme"
+}
