@@ -1,2 +1,1 @@
-# intro-node-sessions-api
-salesforce-sessions-api
+# salesforce-sessions-api
