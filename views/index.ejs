@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=	, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container">
+        <form action="/salesforce" method="POST"> 
+            <div class="mb-3">
+              <label for="EmailAddress" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="EmailAddress" name="EmailAddress" aria-describedby="emailHelp">
+              <div id="emailId" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3 form-check">
+              <input type="text" class="" id="FirstName" name="FirstName">
+              <label class="form-check-label" for="FirstName">FirstName</label>
+            </div>
+            <div class="mb-3 form-check">
+              <input type="text" class="" id="LastName" name="LastName">
+              <label class="form-check-label" for="LastName">LastName</label>
+            </div>
+            <div class="mb-3 form-check">
+              <input type="number" class="" id="CustomerSatisfaction" name="CustomerSatisfaction">
+              <label class="form-check-label" for="CustomerSatisfaction">CustomerSatisfaction</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    </div>
+</body>
+</html>
