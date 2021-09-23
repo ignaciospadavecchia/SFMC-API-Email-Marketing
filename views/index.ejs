@@ -1,32 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=	, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<html>
 
+<head>
+  <title>Penfield Digital - SMC</title>
+  <%- include("./partials/_head") %>
 </head>
 <body>
-    <div class="container">
+    <div class="d-flex vh-100 align-items-center justify-content-center">
         <form action="/salesforce" method="POST"> 
             <div class="mb-3">
               <label for="EmailAddress" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="EmailAddress" name="EmailAddress" aria-describedby="emailHelp">
-              <div id="emailId" class="form-text">We'll never share your email with anyone else.</div>
+              <input type="email" class="form-control" id="EmailAddress" name="EmailAddress" required aria-describedby="emailHelp">
             </div>
-            <div class="mb-3 form-check">
-              <input type="text" class="" id="FirstName" name="FirstName">
-              <label class="form-check-label" for="FirstName">FirstName</label>
+            <div class="mb-3">
+              <label for="FirstName" class="form-label" >FirstName</label>
+              <input type="text" class="" id="FirstName" name="FirstName" required>
             </div>
-            <div class="mb-3 form-check">
-              <input type="text" class="" id="LastName" name="LastName">
+            <div class="mb-3">
               <label class="form-check-label" for="LastName">LastName</label>
+              <input type="text" class="form-label" id="LastName" name="LastName" required>
             </div>
-            <div class="mb-3 form-check">
-              <input type="number" class="" id="CustomerSatisfaction" name="CustomerSatisfaction">
-              <label class="form-check-label" for="CustomerSatisfaction">CustomerSatisfaction</label>
+            <div class="mb-3">
+                <label class="form-check-label" for="CustomerSatisfaction">CustomerSatisfaction</label>
+              <input type="number" class="form-label" id="CustomerSatisfaction" name="CustomerSatisfaction">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
