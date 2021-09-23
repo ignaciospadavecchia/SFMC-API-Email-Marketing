@@ -2,17 +2,13 @@
 const voucherGenerator = require("../utils/voucherGenerator");
 const request = require("request");
 require('dotenv').config();
-const {SUBDOMAIN,ACCESS_TOKEN, MONGO_DB, MONGO_HOST} = process.env
-
-var Domain = process.env.SUBDOMAIN;
-var Token = process.env.ACCESS_TOKEN;
-var DataExtensionKey = process.env.DATA_EXTENSION_KEY;
+const {SUBDOMAIN,ACCESS_TOKEN, DATA_EXTENSION_KEY} = process.env
 
 /* Defines how to Add Records to Salesforce Marketing Cloud Data Extension Object */
 function addRecordToDataExtension(
-  Domain,
-  Token,
-  DataExtensionKey,
+  SUBDOMAIN,
+  ACCESS_TOKEN,
+  DATA_EXTENSION_KEY,
   EmailAddress,
   FirstName,
   LastName,
@@ -21,7 +17,7 @@ function addRecordToDataExtension(
 ) {
    var options = {
     method: "POST",
-    url: `https://${Domain}.soap.marketingcloudapis.com/Service.asmx`,
+    url: `https://${SUBDOMAIN}.soap.marketingcloudapis.com/Service.asmx`,
     headers: {
       "Content-Type": "application/xml",
     },
@@ -32,9 +28,9 @@ function addRecordToDataExtension(
         \n
         <a:Action s:mustUnderstand="1">Create</a:Action>
         \n
-        <a:To s:mustUnderstand="1">https://${Domain}.soap.marketingcloudapis.com/Service.asmx</a:To>
+        <a:To s:mustUnderstand="1">https://${SUBDOMAIN}.soap.marketingcloudapis.com/Service.asmx</a:To>
         \n
-        <fueloauth xmlns="http://exacttarget.com">${Token}</fueloauth>
+        <fueloauth xmlns="http://exacttarget.com">${ACCESS_TOKEN}</fueloauth>
         \n
     </s:Header>
     \n
@@ -50,7 +46,7 @@ function addRecordToDataExtension(
                 \n
                 <ObjectID xsi:nil="true" />
                 \n
-                <CustomerKey>${DataExtensionKey}</CustomerKey>
+                <CustomerKey>${DATA_EXTENSION_KEY}</CustomerKey>
                 \n
                 <Properties>
                     \n
@@ -130,9 +126,9 @@ exports.getCustomerSurveyData = (req, res) => {
 
   // Adds Records to SMC Data Extension Object
   addRecordToDataExtension(
-    Domain,
-    Token,
-    DataExtensionKey,
+    SUBDOMAIN,
+    ACCESS_TOKEN,
+    DATA_EXTENSION_KEY,
     EmailAddress,
     FirstName,
     LastName,
