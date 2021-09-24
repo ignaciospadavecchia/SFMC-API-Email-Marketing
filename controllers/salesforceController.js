@@ -115,6 +115,5 @@ exports.getCustomerSurveyData = async (req, res) => {
       VoucherCode
     );
   }
-
   res.send("Customer Survey submited to Salesforce Marketing Cloud");
 }
