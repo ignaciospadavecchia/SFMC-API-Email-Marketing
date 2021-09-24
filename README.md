@@ -12,7 +12,6 @@
     <tr>
         <td>
             <div align="center">
-                <h2>Bienvenidos a Avísame!</h2>
                 Nike's Customer Satisfaction App with Salesforce Marketing Cloud integration
             </div>     
         </td>
