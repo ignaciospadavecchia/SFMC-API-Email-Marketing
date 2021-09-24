@@ -8,6 +8,31 @@ const { SUBDOMAIN, ACCESS_TOKEN, DATA_EXTENSION_KEY, CLIENT_ID, CLIENT_SECRET, A
 // Defines a provisional Access token variable 
 var AccessToken = "";
 
+// Defines how to get an ACCESS_TOKEN
+var getAuthToken = () => {
+
+ // 1. Requests a new Auth Token to SFMC auth API endpoint
+ axios.post(`https://${SUBDOMAIN}.auth.marketingcloudapis.com/v2/token`, {
+
+  "grant_type": "client_credentials",
+  "client_id": `${CLIENT_ID}`,
+  "client_secret": `${CLIENT_SECRET}`,
+  "account_id": `${ACCOUNT_ID}`
+
+})
+  .then(function (response) {
+    // 2. Updates the Access/Auth Token variable
+    AccessToken = response.data.access_token;
+    // console.log(ACCESS_TOKEN)
+    // console.log(AccessToken)
+    // console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+  
+}
+
 // Defines how to Add the Customer filled form to SFMC Data Extension Object Records.
 function addRecordToDataExtension(
   SUBDOMAIN,
@@ -19,45 +44,37 @@ function addRecordToDataExtension(
   CustomerSatisfaction,
   VoucherCode
 ) {
-
-  // Defines request module "options" parameter
-  axios.post(`https://${SUBDOMAIN}.rest.marketingcloudapis.com/interaction/v1/interactions/`, {
+  // Defines Entry Event interaction
+  let data = JSON.stringify({
     "ContactKey": "ign@tutanota.de",
     "EventDefinitionKey": "APIEvent-38fb1006-d66f-4fef-c6e4-23ffe76ef037",
     "Data": {
-      "accountNumber": "13828757-ff57-4c76-a315-2852666b1af4",
-      "FirsName": "John Smith"
-    }})
+      "EmailAddress": `${EmailAddress}`,
+      "FirstName": `${FirstName}`,
+      "LastName": `${LastName}`,
+      "CustomerSatisfaction": `${CustomerSatisfaction}`,
+      "VoucherCode": `${VoucherCode}`
+    }
+  });
+
+  let config = {
+    method: 'post',
+    url: 'https://mc2hrw9w4dptkls8hvd-wwlct100.rest.marketingcloudapis.com/interaction/v1/events',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `bearer ${AccessToken}`
+    },
+    data: data
+  };
+
+  axios(config)
     .then(function (response) {
-      console.log(response);
+      console.log(JSON.stringify(response.data));
     })
     .catch(function (error) {
       console.log(error);
-  });
-}
-
-// Defines how to get an ACCESS_TOKEN
-var getAuthToken = () => {
-
-  // 1. Requests a new Auth Token to SFMC auth API endpoint
-  axios.post(`https://${SUBDOMAIN}.auth.marketingcloudapis.com/v2/token`, {
-
-    "grant_type": "client_credentials",
-    "client_id": `${CLIENT_ID}`,
-    "client_secret": `${CLIENT_SECRET}`,
-    "account_id": `${ACCOUNT_ID}`
-
-  })
-  .then(function (response) {
-    // 2. Updates the Access/Auth Token variable
-    AccessToken = response.data.access_token;
-    // console.log(ACCESS_TOKEN)
-    // console.log(AccessToken)
-    // console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  })
+    });
+ 
 }
 
 // Gets the Survey filled form data and Adds it to a SFMC Data Extension Object Record.
