@@ -1,7 +1,7 @@
 
 # Penfield Digital - Salesforce
 
-* Slides Presentation:https://slides.com/ign-cch/salesforce-marketing-cloud 
+* Slides Presentation: https://slides.com/ign-cch/salesforce-marketing-cloud/fullscreen
 
 * For asssesment purposes only .env:
 
