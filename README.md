@@ -1,3 +1,4 @@
+
 # Penfield Digital - Salesforce
 
 * .env for asssesment purposes only:
@@ -9,8 +10,7 @@
     SUBDOMAIN = mc2hrw9w4dptkls8hvd-wwlct100
     EVENT_DEFINITION = APIEvent-38fb1006-d66f-4fef-c6e4-23ffe76ef037
 
-* TechDebt: 
+![Screenshot 2021-09-23 at 01-37-14 Edit Salesforce Marketing Cloud](https://user-images.githubusercontent.com/80477712/134435867-1c9e3f13-897f-4b73-a1ac-64d5c57419b6.png)
 
-- Bug regading asyncronous token request.
-- Express validator to doble-check input fields in the server. 
-- Learn how to do a third validation in Salesforce Marketing Cloud
+
+
