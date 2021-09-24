@@ -5,7 +5,7 @@ const axios = require('axios').default;
 require('dotenv').config();
 const { SUBDOMAIN, DATA_EXTENSION_KEY, CLIENT_ID, CLIENT_SECRET, ACCOUNT_ID, EVENT_DEFINITION } = process.env
 
-// Defines a provisional Access token gloabl variable 
+// Defines a provisional Access token gloabal variable 
 var AccessToken = "";
 
 // Defines how to get the Access token

@@ -1,6 +1,7 @@
+
  /* Tests */
- test("a GET request status 200 to known Salesforce endpoint", async () => {
-    const response = await request.get("https://mc2hrw9w4dptkls8hvd-wwlct100.soap.marketingcloudapis.com/Service.asmx");
+ test("a POST request status 200 to known Salesforce endpoint", async () => {
+    const response = await request.post("https://mc2hrw9w4dptkls8hvd-wwlct100.rest.marketingcloudapis.com/interaction/v1/events");
     expect(response.status).toBe(200);
   });
 
