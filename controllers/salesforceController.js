@@ -5,10 +5,10 @@ const axios = require('axios').default;
 require('dotenv').config();
 const { SUBDOMAIN, DATA_EXTENSION_KEY, CLIENT_ID, CLIENT_SECRET, ACCOUNT_ID, EVENT_DEFINITION } = process.env
 
-// Defines a provisional Access token variable 
+// Defines a provisional Access token gloabl variable 
 var AccessToken = "";
 
-// Defines how to get an ACCESS_TOKEN
+// Defines how to get the Access token
 var getAuthToken = () => {
 
   // 1. Requests a new Auth Token to SFMC auth API endpoint
@@ -30,7 +30,7 @@ var getAuthToken = () => {
       console.log(error);
     })
 }
-
+// Gets the token for current session
 getAuthToken();
 
 // Defines how to Add the Customer filled form to SFMC Data Extension Object Records.
@@ -75,7 +75,6 @@ function addRecordToDataExtension(
     .catch(function (error) {
       console.log(error);
     });
-
 }
 
 // Gets the Survey filled form data and Adds it to a SFMC Data Extension Object Record.
@@ -85,11 +84,11 @@ exports.getCustomerSurveyData = async (req, res) => {
   let { EmailAddress, FirstName, LastName, CustomerSatisfaction } = req.body;
   console.log(`The user form inputs are: ${EmailAddress} ${FirstName} ${LastName} ${CustomerSatisfaction}`)
 
-   // 3. Generates a random voucher code
+  // 2. Generates a random voucher code
   let VoucherCode = voucherGenerator(10);
   console.log(`The discount voucher code generated is: ${VoucherCode}`);
 
-  // 4. Adds Records to SMC Data Extension Object
+  // 3. Adds the Records to SMC Data Extension Object
   if (AccessToken.expires_in != 0) {
     addRecordToDataExtension(
       SUBDOMAIN,
@@ -116,8 +115,6 @@ exports.getCustomerSurveyData = async (req, res) => {
       VoucherCode
     );
   }
-
-
 
   res.send("Customer Survey submited to Salesforce Marketing Cloud");
 }
