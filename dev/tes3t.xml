@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+    <env:Header xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+        <wsa:Action>http://schemas.xmlsoap.org/ws/2004/08/addressing/fault</wsa:Action>
+        <wsa:MessageID>urn:uuid:ea2f15e2-0bae-4fec-88a2-6e375f865dfd</wsa:MessageID>
+        <wsa:RelatesTo>urn:uuid:b1207f0e-3b37-470d-bbe8-557977d040a3</wsa:RelatesTo>
+        <wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>
+        <wsse:Security>
+            <wsu:Timestamp wsu:Id="Timestamp-6c96f254-0f9f-4371-a818-58e0fada6c38">
+                <wsu:Created>2021-09-23T19:34:44Z</wsu:Created>
+                <wsu:Expires>2021-09-23T19:39:44Z</wsu:Expires>
+            </wsu:Timestamp>
+        </wsse:Security>
+    </env:Header>
+    <soap:Body>
+        <soap:Fault>
+            <soap:Code>
+                <soap:Value xmlns:q0="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">q0:Security</soap:Value>
+            </soap:Code>
+            <soap:Reason>
+                <soap:Text xml:lang="en">Login Failed</soap:Text>
+            </soap:Reason>
+            <soap:Node>https://mc2hrw9w4dptkls8hvd-wwlct100.soap.marketingcloudapis.com/Service.asmx</soap:Node>
+        </soap:Fault>
+    </soap:Body>
+</soap:Envelope>

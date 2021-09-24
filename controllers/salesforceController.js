@@ -1,13 +1,42 @@
+// Variables
 const voucherGenerator = require("../utils/voucherGenerator");
 const request = require("request");
 const axios = require('axios').default;
 require('dotenv').config();
 const { SUBDOMAIN, ACCESS_TOKEN, DATA_EXTENSION_KEY, CLIENT_ID, CLIENT_SECRET, ACCOUNT_ID } = process.env
 
-/* Defines how to Add Records to Salesforce Marketing Cloud Data Extension Object */
+// Defines a provisional Access token variable 
+var AccessToken = "";
+
+// Defines how to get an ACCESS_TOKEN
+var getAuthToken = () => {
+
+ // 1. Requests a new Auth Token to SFMC auth API endpoint
+ axios.post(`https://${SUBDOMAIN}.auth.marketingcloudapis.com/v2/token`, {
+
+  "grant_type": "client_credentials",
+  "client_id": `${CLIENT_ID}`,
+  "client_secret": `${CLIENT_SECRET}`,
+  "account_id": `${ACCOUNT_ID}`
+
+})
+  .then(function (response) {
+    // 2. Updates the Access/Auth Token variable
+    AccessToken = response.data.access_token;
+    // console.log(ACCESS_TOKEN)
+    // console.log(AccessToken)
+    // console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+  
+}
+
+// Defines how to Add the Customer filled form to SFMC Data Extension Object Records.
 function addRecordToDataExtension(
   SUBDOMAIN,
-  ACCESS_TOKEN,
+  AccessToken,
   DATA_EXTENSION_KEY,
   EmailAddress,
   FirstName,
@@ -15,99 +44,55 @@ function addRecordToDataExtension(
   CustomerSatisfaction,
   VoucherCode
 ) {
-  var options = {
-    method: "POST",
-    url: `https://${SUBDOMAIN}.soap.marketingcloudapis.com/Service.asmx`,
-    headers: {
-      "Content-Type": "application/xml",
-    },
-    body: `<?xml version="1.0" encoding="UTF-8"?>
-    <s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
-
-        <s:Header>
-            <a:Action s:mustUnderstand="1">Create</a:Action>
-            <a:To s:mustUnderstand="1">https://${SUBDOMAIN}.soap.marketingcloudapis.com/Service.asmx</a:To>
-            <fueloauth xmlns="http://exacttarget.com">${ACCESS_TOKEN}</fueloauth>
-        </s:Header>
-        <s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-            <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
-                <Options />
-                <Objects xsi:type="DataExtensionObject">
-                    <PartnerKey xsi:nil="true" />
-                    <ObjectID xsi:nil="true" />
-                    <CustomerKey>${DATA_EXTENSION_KEY}</CustomerKey>
-                    <Properties>
-                        <Property>
-                            <Name>EmailAddress</Name>
-                            <Value>${EmailAddress}</Value>
-                        </Property>
-                        <Property>
-                            <Name>FirstName</Name>
-                            <Value>${FirstName}</Value>
-                        </Property>
-                        <Property>
-                            <Name>LastName</Name>
-                            <Value>${LastName}</Value>
-                        </Property>
-                        <Property>
-                            <Name>VoucherCode</Name>
-                            <Value>${VoucherCode}</Value>
-                        </Property>
-                        <Property>
-                            <Name>CustomerSatisfaction</Name>
-                            <Value>${CustomerSatisfaction}</Value>
-                        </Property>
-                    </Properties>
-                </Objects>
-            </CreateRequest>
-        </s:Body>
-    </s:Envelope>
-    `,
-  };
-  request(options, function (error, response) {
-    if (error) throw new Error(error);
-    console.log(`Add Record to Data Extension Error: ${response.body}`);
+  // Defines Entry Event interaction
+  let data = JSON.stringify({
+    "ContactKey": "ign@tutanota.de",
+    "EventDefinitionKey": "APIEvent-38fb1006-d66f-4fef-c6e4-23ffe76ef037",
+    "Data": {
+      "EmailAddress": `${EmailAddress}`,
+      "FirstName": `${FirstName}`,
+      "LastName": `${LastName}`,
+      "CustomerSatisfaction": `${CustomerSatisfaction}`,
+      "VoucherCode": `${VoucherCode}`
+    }
   });
+
+  let config = {
+    method: 'post',
+    url: 'https://mc2hrw9w4dptkls8hvd-wwlct100.rest.marketingcloudapis.com/interaction/v1/events',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `bearer ${AccessToken}`
+    },
+    data: data
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+ 
 }
 
-/* Defines how to get a refreshed ACCESS_TOKEN */
-let getAuthToken = () => {
-// Request for a new Auth Token
-axios.post(`https://${SUBDOMAIN}.auth.marketingcloudapis.com/v2/token`, {
-    
-        "grant_type": "client_credentials",
-        "client_id": `${CLIENT_ID}`,
-        "client_secret": `${CLIENT_SECRET}`,
-        "account_id": `${ACCOUNT_ID}` 
-    
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  })
-  /* .then(function () {
-  });  */
-} 
-
-/* Gets the Customer Satisfaction Survey feedback and Adds Records */
+// Gets the Survey filled form data and Adds it to a SFMC Data Extension Object Record.
 exports.getCustomerSurveyData = (req, res) => {
   let { EmailAddress, FirstName, LastName, CustomerSatisfaction } = req.body;
-  // Dev debug
-  console.log(`${EmailAddress} ${FirstName} ${LastName} ${CustomerSatisfaction}`)
+  // debug console.log(`${EmailAddress} ${FirstName} ${LastName} ${CustomerSatisfaction}`)
 
-  // Generates a random voucher code
+  // 1. Refreshes the Authorization Token
+  getAuthToken();
+
+  // 2. Generates a random voucher code
   let VoucherCode = voucherGenerator(10);
   console.log(`the voucher code generated is: ${VoucherCode}`);
 
-  // Refreshes the Authorization Token
-  getAuthToken();
-
-  // Adds Records to SMC Data Extension Object
+  // 3. Adds Records to SMC Data Extension Object
   addRecordToDataExtension(
     SUBDOMAIN,
-    ACCESS_TOKEN,
+    AccessToken,
     DATA_EXTENSION_KEY,
     EmailAddress,
     FirstName,
@@ -115,5 +100,6 @@ exports.getCustomerSurveyData = (req, res) => {
     CustomerSatisfaction,
     VoucherCode
   );
+
   res.send("Customer Survey submited to Salesforce Marketing Cloud");
 }
