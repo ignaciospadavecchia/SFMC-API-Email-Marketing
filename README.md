@@ -1,7 +1,9 @@
 
 # Penfield Digital - Salesforce
 
-* temporal .env for asssesment purposes only:
+* Slides Presentation:https://slides.com/ign-cch/salesforce-marketing-cloud 
+
+* For asssesment purposes only .env:
 
     DATA_EXTENSION_KEY = NikeCS_Data_Extension
     CLIENT_ID = 0gkpfbzw5mhrx00hyyuk7m7h
