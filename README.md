@@ -2,14 +2,8 @@
 # Penfield Digital - Salesforce
 
 * Slides Presentation: https://slides.com/ign-cch/salesforce-marketing-cloud/fullscreen
-
 <table>
-    <tr>
-        <td width="1200">
-        ![Screenshot 2021-09-23 at 01-37-14 Edit Salesforce Marketing Cloud](https://user-images.githubusercontent.com/80477712/134435867-1c9e3f13-897f-4b73-a1ac-64d5c57419b6.png)
-        </td>
-    </tr>
-    <tr>
+     <tr>
         <td>
             <div align="center">
                 Nike's Customer Satisfaction App with Salesforce Marketing Cloud integration
@@ -54,3 +48,5 @@ npm test
 - [Bootstrap 5.0](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
 
 ---
+
+![Screenshot 2021-09-23 at 01-37-14 Edit Salesforce Marketing Cloud](https://user-images.githubusercontent.com/80477712/134435867-1c9e3f13-897f-4b73-a1ac-64d5c57419b6.png)
