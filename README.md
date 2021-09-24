@@ -1,18 +1,21 @@
 
-# Penfield Digital - Salesforce
-
-* Slides Presentation: https://slides.com/ign-cch/salesforce-marketing-cloud/fullscreen
 <table>
      <tr>
         <td>
             <div align="center">
-                Nike's Customer Satisfaction App with Salesforce Marketing Cloud integration
+                 Penfield Digital - Nike's Customer Satisfaction App with Salesforce Marketing Cloud integration
             </div>     
         </td>
     </tr>
 </table> 
 
-Heroku [Nike's CS Salesforce Marketing Cloud App](https://dashboard.heroku.com/apps/ign-penfield-api)
+---
+* Slides Presentation: https://slides.com/ign-cch/salesforce-marketing-cloud/fullscreen
+---
+
+---
+
+## Heroku [Nike's CS Salesforce Marketing Cloud App](https://dashboard.heroku.com/apps/ign-penfield-api)
 
 ---
 
