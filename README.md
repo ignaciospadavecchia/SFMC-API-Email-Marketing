@@ -1,5 +1,6 @@
 <div align="center">
-       <h1>Penfield Digital - Nike's Customer Satisfaction App with Salesforce Marketing Cloud integration</h1>
+       <h1>Penfield Digital</h1>
+       <h3>Nike's Customer Satisfaction App with Salesforce Marketing Cloud integration</h3>
 </div>     
 
 
