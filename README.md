@@ -1,5 +1,7 @@
+<div align="center">
+        Penfield Digital - Nike's Customer Satisfaction App with Salesforce Marketing Cloud integration
+</div>     
 
-## Penfield Digital - Nike's Customer Satisfaction App with Salesforce Marketing Cloud integration
 
 ### * Slides Presentation: https://slides.com/ign-cch/salesforce-marketing-cloud/fullscreen
 
