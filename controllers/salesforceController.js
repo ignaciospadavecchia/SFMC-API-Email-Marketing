@@ -3,41 +3,42 @@ const voucherGenerator = require("../utils/voucherGenerator");
 const request = require("request");
 const axios = require('axios').default;
 require('dotenv').config();
-const { SUBDOMAIN, ACCESS_TOKEN, DATA_EXTENSION_KEY, CLIENT_ID, CLIENT_SECRET, ACCOUNT_ID } = process.env
+const { SUBDOMAIN, DATA_EXTENSION_KEY, CLIENT_ID, CLIENT_SECRET, ACCOUNT_ID, EVENT_DEFINITION } = process.env
 
-// Defines a provisional Access token variable 
+// Defines a provisional Access token gloabl variable 
 var AccessToken = "";
 
-// Defines how to get an ACCESS_TOKEN
+// Defines how to get the Access token
 var getAuthToken = () => {
 
- // 1. Requests a new Auth Token to SFMC auth API endpoint
- axios.post(`https://${SUBDOMAIN}.auth.marketingcloudapis.com/v2/token`, {
+  // 1. Requests a new Auth Token to SFMC auth API endpoint
+  axios.post(`https://${SUBDOMAIN}.auth.marketingcloudapis.com/v2/token`, {
 
-  "grant_type": "client_credentials",
-  "client_id": `${CLIENT_ID}`,
-  "client_secret": `${CLIENT_SECRET}`,
-  "account_id": `${ACCOUNT_ID}`
+    "grant_type": "client_credentials",
+    "client_id": `${CLIENT_ID}`,
+    "client_secret": `${CLIENT_SECRET}`,
+    "account_id": `${ACCOUNT_ID}`
 
-})
-  .then(function (response) {
-    // 2. Updates the Access/Auth Token variable
-    AccessToken = response.data.access_token;
-    // console.log(ACCESS_TOKEN)
-    // console.log(AccessToken)
-    // console.log(response);
   })
-  .catch(function (error) {
-    console.log(error);
-  })
-  
+    .then(function (response) {
+      // 2. Updates the Access/Auth Token variable
+      AccessToken = response.data.access_token;
+      console.log("The current Acces Token is: " + AccessToken)
+      // console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
 }
+// Gets the token for current session
+getAuthToken();
 
 // Defines how to Add the Customer filled form to SFMC Data Extension Object Records.
 function addRecordToDataExtension(
   SUBDOMAIN,
   AccessToken,
   DATA_EXTENSION_KEY,
+  EVENT_DEFINITION,
   EmailAddress,
   FirstName,
   LastName,
@@ -47,7 +48,7 @@ function addRecordToDataExtension(
   // Defines Entry Event interaction
   let data = JSON.stringify({
     "ContactKey": "ign@tutanota.de",
-    "EventDefinitionKey": "APIEvent-38fb1006-d66f-4fef-c6e4-23ffe76ef037",
+    "EventDefinitionKey": `${EVENT_DEFINITION}`,
     "Data": {
       "EmailAddress": `${EmailAddress}`,
       "FirstName": `${FirstName}`,
@@ -74,32 +75,45 @@ function addRecordToDataExtension(
     .catch(function (error) {
       console.log(error);
     });
- 
 }
 
 // Gets the Survey filled form data and Adds it to a SFMC Data Extension Object Record.
-exports.getCustomerSurveyData = (req, res) => {
-  let { EmailAddress, FirstName, LastName, CustomerSatisfaction } = req.body;
-  // debug console.log(`${EmailAddress} ${FirstName} ${LastName} ${CustomerSatisfaction}`)
+exports.getCustomerSurveyData = async (req, res) => {
 
-  // 1. Refreshes the Authorization Token
-  getAuthToken();
+  // 1. Retrieves inputs form express request object
+  let { EmailAddress, FirstName, LastName, CustomerSatisfaction } = req.body;
+  console.log(`The user form inputs are: ${EmailAddress} ${FirstName} ${LastName} ${CustomerSatisfaction}`)
 
   // 2. Generates a random voucher code
   let VoucherCode = voucherGenerator(10);
-  console.log(`the voucher code generated is: ${VoucherCode}`);
+  console.log(`The discount voucher code generated is: ${VoucherCode}`);
 
-  // 3. Adds Records to SMC Data Extension Object
-  addRecordToDataExtension(
-    SUBDOMAIN,
-    AccessToken,
-    DATA_EXTENSION_KEY,
-    EmailAddress,
-    FirstName,
-    LastName,
-    CustomerSatisfaction,
-    VoucherCode
-  );
-
+  // 3. Adds the Records to SMC Data Extension Object
+  if (AccessToken.expires_in != 0) {
+    addRecordToDataExtension(
+      SUBDOMAIN,
+      AccessToken,
+      DATA_EXTENSION_KEY,
+      EVENT_DEFINITION,
+      EmailAddress,
+      FirstName,
+      LastName,
+      CustomerSatisfaction,
+      VoucherCode
+    );
+  } else if (AccessToken.expires_in == 0) {
+    getAuthToken();
+    addRecordToDataExtension(
+      SUBDOMAIN,
+      AccessToken,
+      DATA_EXTENSION_KEY,
+      EVENT_DEFINITION,
+      EmailAddress,
+      FirstName,
+      LastName,
+      CustomerSatisfaction,
+      VoucherCode
+    );
+  }
   res.send("Customer Survey submited to Salesforce Marketing Cloud");
 }
