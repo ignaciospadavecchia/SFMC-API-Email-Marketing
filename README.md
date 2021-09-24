@@ -1,7 +1,7 @@
 
 # Penfield Digital - Salesforce
 
-* .env for asssesment purposes only:
+* temporal .env for asssesment purposes only:
 
     DATA_EXTENSION_KEY = NikeCS_Data_Extension
     CLIENT_ID = 0gkpfbzw5mhrx00hyyuk7m7h
