@@ -5,27 +5,31 @@
   <title>Penfield Digital - SMC</title>
   <%- include("./partials/_head") %>
 </head>
+
 <body>
-    <div class="d-flex vh-100 align-items-center justify-content-center">
-        <form action="/salesforce" method="POST"> 
-            <div class="mb-3">
-              <label for="EmailAddress" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="EmailAddress" name="EmailAddress" required aria-describedby="emailHelp">
-            </div>
-            <div class="mb-3">
-              <label for="FirstName" class="form-label" >FirstName</label>
-              <input type="text" class="" id="FirstName" name="FirstName" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-check-label" for="LastName">LastName</label>
-              <input type="text" class="form-label" id="LastName" name="LastName" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-check-label" for="CustomerSatisfaction">CustomerSatisfaction</label>
-              <input type="number" class="form-label" id="CustomerSatisfaction" name="CustomerSatisfaction">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-    </div>
+  <div class="d-flex vh-100 align-items-center justify-content-center">
+    <form action="/salesforce" method="POST">
+      <div class="mb-3">
+        <label for="EmailAddress" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="EmailAddress" name="EmailAddress" required
+          aria-describedby="emailHelp">
+      </div>
+      <div class="mb-3">
+        <label for="FirstName" class="form-label">FirstName</label>
+        <input type="text" class="" id="FirstName" name="FirstName" required aria-describedby="FirstName">
+      </div>
+      <div class="mb-3">
+        <label class="form-check-label" for="LastName">LastName</label>
+        <input type="text" class="form-label" id="LastName" name="LastName" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-check-label" for="CustomerSatisfaction">CustomerSatisfaction</label>
+        <input type="number" class="form-label" id="CustomerSatisfaction" name="CustomerSatisfaction"
+          aria-describedby="CustomerSatisfaction">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
 </body>
+
 </html>
