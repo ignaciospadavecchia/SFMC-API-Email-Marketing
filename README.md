@@ -17,12 +17,7 @@
 npm install
 npm start
 ```
-## TDD
-```
-- Jest with puppeteer and supertest for project testing purposes ( current work in progress )
-``` javascript
-npm test 
-```
+
 ---
 ## Built with
 
